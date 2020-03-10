@@ -1,0 +1,32 @@
+<!--
+ - Created by User on 05.03.2020.
+ -->
+
+<apex:page renderAs="pdf" controller="PDFGeneratorController">
+
+        <apex:form>
+            <apex:image style="float:right;" value=
+            "https://icon-icons.com/icons2/1154/PNG/64/1486564400-account_81513.png" rendered="{!IF (template.imageRendered == 'Yes' ,true, false)}"></apex:image>
+            <apex:pageBlock title="{!choseObject[template.titleName]}" >
+
+                <apex:repeat value="{!template.sectionList}" var="sectionInfo">
+
+                    <h3 style="background: silver; padding-left: 5px;">{!sectionInfo.sectionName}</h3>
+
+                    <apex:pageBlockSection title="" columns="{!sectionInfo.numberColumn}" showHeader="false">
+
+                        <apex:repeat value="{!sectionInfo.fieldNameList}" var="sectionFieldName">
+                            <apex:pageBlockSectionItem rendered="{!IF (sectionFieldName !='', false, true)}"/>
+                            <apex:pageBlockSectionItem rendered="{!IF (sectionFieldName =='', false, true)}">
+                                <apex:outputLabel value="{!$ObjectType[objectName].Fields[sectionFieldName].Label}"
+                                                  style="margin-right: 20px; margin-left: 20px;"/>
+                                <apex:outputField value="{!choseObject[sectionFieldName]}"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:repeat>
+
+                    </apex:pageBlockSection>
+                </apex:repeat>
+            </apex:pageBlock>
+        </apex:form>
+    </apex:page>
+
